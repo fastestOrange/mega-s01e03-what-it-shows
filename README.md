@@ -39,7 +39,7 @@ Exported 2026-10-04 from the `support` repo, `apps/kb/` → `src/`.
 
 ## Added for #4471 (MEGA.dev S01E03)
 
-- Page: `src/routes/kb/incidents/4471-split/+page.svx`, signed, desk ref `DR-4X88-D9ZB`.
+- Page: `src/routes/kb/incidents/4471-split/+page.svx`, signed, desk ref `DR-V561-5VNA`.
 - Logic: `src/lib/kb/problems.ts` and `src/lib/kb/ProblemTable.svelte` (builds on `causes.ts`, which is unchanged).
 - The page as the desk sees it: `rendered/kb/incidents/4471-split.html` (static build) and `rendered/4471-split.png`.
 - Tickets: [#1 parser](../../issues/1) · [#2 hint](../../issues/2) · [#3 one-day](../../issues/3).

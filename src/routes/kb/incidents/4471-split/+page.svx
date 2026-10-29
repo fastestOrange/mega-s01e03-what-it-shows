@@ -4,7 +4,7 @@ title: '#4471, split · three problems, three tickets'
 owner: support desk
 status: open
 reviewed: 2026-10-29
-signature: Christian Oliver
+signature: v1.eyJzdWIiOiIxNjY2IiwiYXVkIjoiY2hhbGxlbmdlOndoYXQtaXQtc2hvd3MiLCJpYXQiOjE3OTMyODE2MDYsImV4cCI6MTc5MzM2ODAwNn0.K4-UQTfRTSFnVjIumKYw-UCAN8EZktzfMJm2_hewuQg
 ---
 
 <script>
