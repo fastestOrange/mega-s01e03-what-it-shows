@@ -13,15 +13,24 @@ signature: v1.eyJzdWIiOiIxNjY2IiwiYXVkIjoiY2hhbGxlbmdlOndoYXQtaXQtc2hvd3MiLCJpYX
   import RenderStamp from '#lib/kb/RenderStamp.svelte';
 
   const repo = 'https://github.com/fastestOrange/mega-s01e03-what-it-shows/issues';
-  const tickets = { parser: `${repo}/1`, hint: `${repo}/2`, 'one-day': `${repo}/3` };
+  // Where each ticket stands after the engineering update on #4471 (closed 5 Oct).
+  const tickets = {
+    parser: { url: `${repo}/1`, status: 'fixed' },
+    hint: { url: `${repo}/2`, status: "won't fix" },
+    'one-day': { url: `${repo}/3`, status: 'open' },
+  };
 </script>
 
-[#4471](/kb/incidents/4471) is marked known: one issue, one fix queued. It isn't one issue. The
-desk merged every report whose subject line matched ([decision 0001](/kb/decisions/0001-dedupe-by-subject)),
-and three problems share those subjects. Each now has its own ticket.
+[#4471](/kb/incidents/4471) was filed as one issue with one fix. It held three problems. The desk
+merged every report whose subject line matched ([decision 0001](/kb/decisions/0001-dedupe-by-subject)),
+and three problems share those subjects. Each has its own ticket.
+
+Engineering closed #4471 on 5 October: the parser is fixed (`fix(dates): parse dd/mm for eu locales`)
+and the `booking-v3` form is retired, so its hint won't be fixed.
 
 <Callout kind="warn">
-The queued parser fix closes only the first row. Keep #4471 open until all three tickets are closed.
+#4471 is closed, and one problem in it is not fixed. Dates that move by one day are still open: neither
+the parser fix nor retiring the form reaches them.
 </Callout>
 
 ## What #4471 holds
@@ -35,17 +44,18 @@ intake's tag: the tag is a guess from the reporter's browser.
 
 **`parser` — the shared parser reads dates month first.** Every tenant here writes the day first, so a
 date with a day of 12 or less swaps: 7 April goes out as 4 July. Covers app and email reports from every
-tenant, and form reports from `booking-v2`. The queued fix is for this one.
+tenant, and form reports from `booking-v2`. Fixed.
 
 **`hint` — the `booking-v3` form asks for `MM/DD/YYYY`.** Clients of day-first tenants type what the
 hint says, and the form reads it day first. The result looks like the parser bug and has a different fix:
 the hint. The #4471 page already placed these apart ("no ticket of its own"); now they have one.
+Won't fix: the form is retired, so no new reports of this kind can come in.
 
 **`one-day` — dates move by one day.** Not a swap: Tuesday 12 May shows as Monday 11 May; a Lisbon
 client gets Tuesday and a Toronto client Monday for the same meeting; an invite arrives before the booking
 was made. That points at time zones. The desk had already noted these as a one-day move; the #4471
-page counts them under `parser`, where the parser fix won't reach them. One reporter has stopped
-reporting it, so expect more than the export shows.
+page counts them under `parser`, where the parser fix doesn't reach them. Still open. One reporter has
+stopped reporting it, so expect more than the export shows.
 
 ## For triage
 

@@ -5,8 +5,9 @@
   import { uniqueById, type Report } from '#lib/kb/causes';
   import { tenantOf } from '#lib/kb/locales';
 
-  // tickets: problem → URL of the ticket filed for it.
-  let { ticket, tickets = {} }: { ticket: number; tickets?: Partial<Record<Problem, string>> } = $props();
+  // tickets: problem → the ticket filed for it and where it stands.
+  type Filed = { url: string; status: string };
+  let { ticket, tickets = {} }: { ticket: number; tickets?: Partial<Record<Problem, Filed>> } = $props();
 
   const rows = $derived(uniqueById(reports as Report[]));
   const groups = $derived(groupByProblem(rows, ticket, tenantOf, notes.oneDayMove));
@@ -22,7 +23,7 @@
 
 <table>
   <thead>
-    <tr><th>problem</th><th>reports</th><th>tenants</th><th>channels</th><th>seen</th><th>ticket</th></tr>
+    <tr><th>problem</th><th>reports</th><th>tenants</th><th>channels</th><th>seen</th><th>ticket</th><th>status</th></tr>
   </thead>
   <tbody>
     {#each groups as g (g.problem)}
@@ -34,10 +35,13 @@
         <td>{g.firstSeen} → {g.lastSeen}</td>
         <td>
           {#if g.problem !== 'unplaced' && tickets[g.problem]}
-            <a href={tickets[g.problem]}>{label(tickets[g.problem]!)}</a>
+            <a href={tickets[g.problem]!.url}>{label(tickets[g.problem]!.url)}</a>
           {:else}
             <span class="none">no ticket</span>
           {/if}
+        </td>
+        <td class:open={g.problem === 'unplaced' || tickets[g.problem]?.status === 'open'}>
+          {g.problem !== 'unplaced' ? (tickets[g.problem]?.status ?? '—') : '—'}
         </td>
       </tr>
     {/each}
@@ -46,5 +50,5 @@
 
 <style>
   .sum { font-size: 1.1rem; }
-  .none { color: var(--warn); font-weight: 600; }
+  .none, .open { color: var(--warn); font-weight: 600; }
 </style>
